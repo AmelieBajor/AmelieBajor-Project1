@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WASD : MonoBehaviour
+public class WASD2 : MonoBehaviour
 {
     public float speed = 5;
 
@@ -17,12 +17,8 @@ public class WASD : MonoBehaviour
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
-    public KeyCode punchKey;
 
 
-    public GameObject punch; 
-
-    
     // private doesn't have to be written down to make the var private
 
 
@@ -45,7 +41,7 @@ public class WASD : MonoBehaviour
         //Time.deltaTime keeps game consistent in different computer speeds
         transform.Translate(dir * speed * Time.deltaTime);
 
-        if(Input.GetKey(jump))
+        if (Input.GetKey(jump))
         {
 
             isJumping = true;
@@ -70,19 +66,10 @@ public class WASD : MonoBehaviour
         Vector3 v = Vector3.zero;
 
 
-        if(Input.GetKey(right))
+        if (Input.GetKey(right))
         {
 
             v += Vector3.right;
-
-            if (Input.GetKey(punchKey))
-            {
-
-                Instantiate(punch);
-
-                Debug.Log("right punch");
-
-            }
 
         }
         else if (Input.GetKey(left))
@@ -91,9 +78,6 @@ public class WASD : MonoBehaviour
             v += Vector3.left;
 
         }
-
-
-
 
         return v;
 
@@ -104,7 +88,7 @@ public class WASD : MonoBehaviour
         //if is jumping and can jump is true
         //add force vector3 up
 
-        if(isJumping && canJump)
+        if (isJumping && canJump)
         {
 
             rb2d.AddForce(Vector3.up * jumpForce);
@@ -130,7 +114,5 @@ public class WASD : MonoBehaviour
         Debug.Log("left collision can't jump");
 
     }
-
-
 
 }
