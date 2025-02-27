@@ -11,18 +11,23 @@ public class WASD : MonoBehaviour
     private Rigidbody2D rb2d;
 
     public float jumpForce;
+
     public bool canJump;
     private bool isJumping = false;
+    public bool directionFace = true;
 
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
-    public KeyCode punchKey;
+    public KeyCode shoot;
+
+    public GameObject leftBullet;
+    public GameObject rightBullet;
+
+    public Vector3 leftBulletOffset;
+    public Vector3 rightBulletOffset;
 
 
-    public GameObject punch; 
-
-    
     // private doesn't have to be written down to make the var private
 
 
@@ -45,10 +50,11 @@ public class WASD : MonoBehaviour
         //Time.deltaTime keeps game consistent in different computer speeds
         transform.Translate(dir * speed * Time.deltaTime);
 
-        if(Input.GetKey(jump))
+        if (Input.GetKey(jump))
         {
 
             isJumping = true;
+
 
         }
 
@@ -70,19 +76,13 @@ public class WASD : MonoBehaviour
         Vector3 v = Vector3.zero;
 
 
-        if(Input.GetKey(right))
+        if (Input.GetKey(right))
         {
 
             v += Vector3.right;
 
-            if (Input.GetKey(punchKey))
-            {
+            directionFace = true;
 
-                Instantiate(punch);
-
-                Debug.Log("right punch");
-
-            }
 
         }
         else if (Input.GetKey(left))
@@ -90,7 +90,35 @@ public class WASD : MonoBehaviour
 
             v += Vector3.left;
 
+            directionFace = false;
+
+
+
         }
+
+        if (Input.GetKeyDown(shoot))
+        {
+
+            if (directionFace == true)
+            {
+
+                Instantiate(rightBullet, GetComponent<Transform>().position + leftBulletOffset, Quaternion.identity);
+
+
+            }
+
+            else if (directionFace == false)
+
+            {
+
+                Instantiate(leftBullet, GetComponent<Transform>().position + leftBulletOffset, Quaternion.identity);
+
+            }
+            
+
+
+        }
+
 
 
 
@@ -104,7 +132,7 @@ public class WASD : MonoBehaviour
         //if is jumping and can jump is true
         //add force vector3 up
 
-        if(isJumping && canJump)
+        if (isJumping && canJump)
         {
 
             rb2d.AddForce(Vector3.up * jumpForce);
@@ -118,8 +146,14 @@ public class WASD : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
 
-        canJump = true;
-        Debug.Log("in collision stay area");
+        if (collision.gameObject.tag == "Ground")
+        {
+
+            canJump = true;
+            Debug.Log("in collision stay area");
+
+        }
+
 
     }
 
@@ -130,7 +164,5 @@ public class WASD : MonoBehaviour
         Debug.Log("left collision can't jump");
 
     }
-
-
 
 }
