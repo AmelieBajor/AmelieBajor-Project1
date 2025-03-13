@@ -11,21 +11,35 @@ public class WASD : MonoBehaviour
     private Rigidbody2D rb2d;
 
     public float jumpForce;
-
     public bool canJump;
     private bool isJumping = false;
-    public bool directionFace = true;
+    private bool facing = false;
 
     public KeyCode left;
     public KeyCode right;
     public KeyCode jump;
     public KeyCode shoot;
+    public KeyCode block;
+
 
     public GameObject leftBullet;
     public GameObject rightBullet;
+    public GameObject leftBlock;
+    public GameObject rightBlock;
+
 
     public Vector3 leftBulletOffset;
     public Vector3 rightBulletOffset;
+
+    public float health;
+
+    public Vector3 groundStretch;
+    public Vector3 jumpStretch;
+    public Vector3 walkStretch;
+
+
+
+
 
 
     // private doesn't have to be written down to make the var private
@@ -55,7 +69,6 @@ public class WASD : MonoBehaviour
 
             isJumping = true;
 
-
         }
 
         else
@@ -78,49 +91,66 @@ public class WASD : MonoBehaviour
 
         if (Input.GetKey(right))
         {
+            facing = false;
 
             v += Vector3.right;
 
-            directionFace = true;
+
+
 
 
         }
         else if (Input.GetKey(left))
         {
 
-            v += Vector3.left;
+            facing = true;
 
-            directionFace = false;
+            v += Vector3.left;
 
 
 
         }
 
-        if (Input.GetKeyDown(shoot))
+        if (facing == false)
         {
 
-            if (directionFace == true)
+            if (Input.GetKeyDown(shoot))
             {
 
-                Instantiate(rightBullet, GetComponent<Transform>().position + leftBulletOffset, Quaternion.identity);
+                Instantiate(rightBullet, GetComponent<Transform>().position + rightBulletOffset, Quaternion.identity);
+
+
+            }
+            if (Input.GetKeyDown(block))
+            {
+
+                Instantiate(rightBlock, GetComponent<Transform>().position + rightBulletOffset, Quaternion.identity);
 
 
             }
 
-            else if (directionFace == false)
+        }
 
+        if (facing == true)
+        {
+
+
+            if (Input.GetKeyDown(shoot))
             {
 
                 Instantiate(leftBullet, GetComponent<Transform>().position + leftBulletOffset, Quaternion.identity);
 
-            }
-            
 
+            }
+            if (Input.GetKeyDown(block))
+            {
+
+                Instantiate(leftBlock, GetComponent<Transform>().position + leftBulletOffset, Quaternion.identity);
+
+
+            }
 
         }
-
-
-
 
 
         return v;
@@ -151,6 +181,22 @@ public class WASD : MonoBehaviour
 
             canJump = true;
             Debug.Log("in collision stay area");
+            GetComponent<Transform>().localScale = groundStretch;
+
+            if (Input.GetKey(right))
+            {
+
+                GetComponent<Transform>().localScale = walkStretch;
+
+            }
+            if (Input.GetKey(left))
+            {
+
+                GetComponent<Transform>().localScale = walkStretch;
+
+            }
+
+
 
         }
 
@@ -162,6 +208,7 @@ public class WASD : MonoBehaviour
 
         canJump = false;
         Debug.Log("left collision can't jump");
+        GetComponent<Transform>().localScale = jumpStretch;
 
     }
 
