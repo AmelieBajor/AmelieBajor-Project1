@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class BlockScript : MonoBehaviour
 {
 
     public Vector3 blockMovement;
+    public float speed;
+    public SpriteRenderer mySprite;
     public float blockTimer;
 
 
@@ -32,4 +35,21 @@ public class BlockScript : MonoBehaviour
 
 
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+
+            Destroy(gameObject);
+
+
+        }
+
+
+    }
+
+
+
 }

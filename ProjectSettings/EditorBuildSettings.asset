@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/AmelieBajorUnityProject1.unity
+    guid: 3530bee55e8e8b84e923ead8cad9d6d3
   m_configObjects: {}

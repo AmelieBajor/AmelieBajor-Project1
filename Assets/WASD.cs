@@ -20,7 +20,7 @@ public class WASD : MonoBehaviour
     public KeyCode jump;
     public KeyCode shoot;
     public KeyCode block;
-
+    public Color playerCol;
 
     public GameObject leftBullet;
     public GameObject rightBullet;
@@ -124,7 +124,12 @@ public class WASD : MonoBehaviour
             if (Input.GetKeyDown(block))
             {
 
-                Instantiate(rightBlock, GetComponent<Transform>().position + rightBulletOffset, Quaternion.identity);
+                GameObject blocker = Instantiate(rightBlock, GetComponent<Transform>().position + rightBulletOffset, Quaternion.identity);
+                //BlockScript myBlock = blocker.GetComponent<BlockScript>().blockMovement;
+                //myBlock.blockMovement = new Vector3(Vector3.right * myBlock.speed);
+                //myBlock.mySprite.material.color = playerCol;
+                
+
 
 
             }
